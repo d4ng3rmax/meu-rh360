@@ -1,0 +1,19 @@
+ul {
+  margin-top: 50px;
+}
+
+li {
+  list-style: none;
+  padding: 3px 0;
+
+  a {
+    color: #666;
+    text-decoration: none;
+
+    &:hover {
+      color: #3867a9;
+      text-decoration: underline;
+      font-weight: 600;
+    }
+  }
+}

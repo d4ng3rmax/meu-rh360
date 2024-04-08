@@ -1,0 +1,139 @@
+<div id="user-profile">
+  <div class="container mt-5">
+    <h3>Olá, {{ userName }}. Seja bem-vindo!</h3>
+    <p class="lead">É necessário configurar a empresa matriz para visualizar as informações do sistema.</p>
+    <button class="btn btn-primary" (click)="iniciarConfiguracao()">Iniciar configuração</button>
+  </div>
+
+  <div class="modal" *ngIf="isModalOpen" (click)="fecharModal($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h4 class="modal-title">Editar empresa</h4>
+
+      <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+        <!-- Linha 1 -->
+        <div class="form-row">
+          <div class="col-12 mb-3">
+            <label for="companyType">Tipo de empresa</label>
+            <input type="text" formControlName="companyType" class="form-control" />
+          </div>
+        </div>
+
+        <!-- Linha 2 -->
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="companyName">Nome da empresa *</label>
+            <input type="text" class="form-control" formControlName="companyName"
+              [ngClass]="{ 'is-invalid': submitted && f['companyName'].errors }">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="companyCNPJ">CNPJ da empresa *</label>
+            <input type="text" class="form-control" formControlName="companyCNPJ"
+              [ngClass]="{ 'is-invalid': submitted && f['companyCNPJ'].errors }">
+          </div>
+        </div>
+
+        <!-- Linha 3 -->
+        <div class="form-row">
+          <div class="col-md-2 mb-3">
+            <div class="form-group">
+              <label for="companyCEP">CEP</label>
+              <input type="text" class="form-control" formControlName="companyCEP" placeholder="CEP">
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <div class="form-group">
+              <label for="companyAddress">Endereço</label>
+              <input type="text" class="form-control" formControlName="companyAddress" placeholder="Endereço">
+            </div>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <div class="form-group">
+              <label for="companyNeighborhood">Bairro</label>
+              <input type="text" class="form-control" formControlName="companyNeighborhood" placeholder="Bairro">
+            </div>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <div class="form-group">
+              <label for="companyState">Estado</label>
+              <select class="form-control" formControlName="companyState">
+                <!-- Opções de estado vão aqui -->
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-3 mb-3">
+            <div class="form-group">
+              <label for="companyCity">Cidade</label>
+              <select class="form-control" formControlName="companyCity">
+                <!-- Opções de cidade vão aqui -->
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-5 mb-3">
+            <div class="form-group">
+              <label for="companyComplement">Complemento</label>
+              <input type="text" class="form-control" formControlName="companyComplement" placeholder="Complemento">
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <div class="form-group">
+              <label for="companyEmail">E-mail *</label>
+              <input type="email" class="form-control" formControlName="companyEmail" placeholder="E-mail"
+                [ngClass]="{ 'is-invalid': submitted && f['companyEmail'].errors }">
+              <div *ngIf="submitted && f['companyEmail'].errors" class="invalid-feedback">
+                <div *ngIf="f['companyEmail'].errors['required']">E-mail é obrigatório.</div>
+                <div *ngIf="f['companyEmail'].errors['email']">E-mail é inválido.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Linha 4 -->
+        <div class="form-row">
+          <div class="col-md-2 mb-3">
+            <div class="form-group">
+              <label for="companyPhone">Celular *</label>
+              <input type="text" class="form-control" formControlName="companyPhone" placeholder="Celular"
+                [ngClass]="{ 'is-invalid': submitted && f['companyPhone'].errors }">
+              <div *ngIf="submitted && f['companyPhone'].errors" class="invalid-feedback">
+                <div *ngIf="f['companyPhone'].errors['required']">Celular é obrigatório.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <div class="form-group">
+              <label for="adminName">Nome do administrador *</label>
+              <input type="text" class="form-control" formControlName="adminName" placeholder="Nome do administrador"
+                [ngClass]="{ 'is-invalid': submitted && f['adminName'].errors }">
+              <div *ngIf="submitted && f['adminName'].errors" class="invalid-feedback">
+                <div *ngIf="f['adminName'].errors['required']">Nome do administrador é obrigatório.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <div class="form-group">
+              <label for="adminCPF">CPF</label>
+              <input type="text" class="form-control" formControlName="adminCPF" placeholder="CPF"
+                [ngClass]="{ 'is-invalid': submitted && f['adminCPF'].errors }">
+              <div *ngIf="submitted && f['adminCPF'].errors" class="invalid-feedback">
+                <div *ngIf="f['adminCPF'].errors['required']">CPF é obrigatório.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" (click)="onReset()" class="btn btn-secondary"
+              (click)="isModalOpen = false">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
