@@ -19,11 +19,18 @@ export class UserProfileComponent implements OnInit {
   isModalOpen = false;
 
   companyForm: FormGroup = new FormGroup({
-    fullname: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
-    acceptTerms: new FormControl(false),
+    companyName: new FormControl(''),
+    companyCNPJ: new FormControl(''),
+    companyCEP: new FormControl(''),
+    companyAddress: new FormControl(''),
+    companyNeighborhood: new FormControl(''),
+    companyState: new FormControl(''),
+    companyCity: new FormControl(''),
+    companyComplement: new FormControl(''),
+    companyEmail: new FormControl(''),
+    companyPhone: new FormControl(''),
+    adminName: new FormControl(''),
+    adminCPF: new FormControl('')
   });
   submitted = false;
 
@@ -39,11 +46,12 @@ export class UserProfileComponent implements OnInit {
 
     this.companyForm = this.formBuilder.group({
       companyName: ['', [Validators.required, Validators.minLength(3)]],
-      companyCNPJ: ['', [Validators.required, Validators.pattern(/^\d{14}$/)]],
-      companyPhone: ['', [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
+      companyCNPJ: ['', [Validators.required, Validators.minLength(14)]],
+      companyEmail: ['', [Validators.required, Validators.email]],
+      // companyPhone: ['', [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
+      companyPhone: ['', [Validators.required, Validators.minLength(11)]],
       adminName: ['', [Validators.required]],
-      adminCPF: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
-      companyEmail: ['', [Validators.required, Validators.email]]
+      adminCPF: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]]
     });
   }
 

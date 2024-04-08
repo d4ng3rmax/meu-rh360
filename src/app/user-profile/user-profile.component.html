@@ -119,7 +119,7 @@
 
           <div class="col-md-4 mb-3">
             <div class="form-group">
-              <label for="adminCPF">CPF</label>
+              <label for="adminCPF">CPF *</label>
               <input type="text" class="form-control" formControlName="adminCPF" placeholder="CPF"
                 [ngClass]="{ 'is-invalid': submitted && f['adminCPF'].errors }">
               <div *ngIf="submitted && f['adminCPF'].errors" class="invalid-feedback">
