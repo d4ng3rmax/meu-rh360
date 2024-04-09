@@ -8,6 +8,8 @@ import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
+import { CpfMaskDirective } from './utils/document-mask.directive';
+import { CelMaskDirective } from './utils/cel-mask.directive';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
     RegisterComponent,
     UserProfileComponent,
     MainPageComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    CpfMaskDirective,
+    CelMaskDirective
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,8 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
+import { CpfValidator } from '../utils/cpf-validator';
+import { CnpjValidator } from '../utils/cnpj-validator';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,6 +21,7 @@ export class UserProfileComponent implements OnInit {
   isModalOpen = false;
 
   companyForm: FormGroup = new FormGroup({
+    companyType: new FormControl(''),
     companyName: new FormControl(''),
     companyCNPJ: new FormControl(''),
     companyCEP: new FormControl(''),
@@ -27,10 +30,10 @@ export class UserProfileComponent implements OnInit {
     companyState: new FormControl(''),
     companyCity: new FormControl(''),
     companyComplement: new FormControl(''),
-    companyEmail: new FormControl(''),
-    companyPhone: new FormControl(''),
+    adminCel: new FormControl(''),
     adminName: new FormControl(''),
-    adminCPF: new FormControl('')
+    adminCPF: new FormControl(''),
+    companyEmail: new FormControl('')
   });
   submitted = false;
 
@@ -45,13 +48,19 @@ export class UserProfileComponent implements OnInit {
     // popup:
 
     this.companyForm = this.formBuilder.group({
+      companyType: [''],
       companyName: ['', [Validators.required, Validators.minLength(3)]],
-      companyCNPJ: ['', [Validators.required, Validators.minLength(14)]],
+      companyCNPJ: ['', [Validators.required, CnpjValidator.isValidCnpj()]],
+      companyCEP: [''],
+      companyAddress: [''],
+      companyNeighborhood: [''],
+      companyState: [''],
+      companyCity: [''],
+      companyComplement: [''],
       companyEmail: ['', [Validators.required, Validators.email]],
-      // companyPhone: ['', [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
-      companyPhone: ['', [Validators.required, Validators.minLength(11)]],
-      adminName: ['', [Validators.required]],
-      adminCPF: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]]
+      adminCel: ['', [Validators.required, Validators.minLength(8)]],
+      adminName: ['', [Validators.required, Validators.minLength(5)]],
+      adminCPF: ['', [Validators.required, CpfValidator.isValidCpf()]]
     });
   }
 
@@ -63,7 +72,7 @@ export class UserProfileComponent implements OnInit {
     return fullName.split(' ')[0];
   }
 
-  iniciarConfiguracao() {
+  abrirModalConfiguracao() {
     this.isModalOpen = true;
   }
 
@@ -74,6 +83,7 @@ export class UserProfileComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
 
+    console.log('status form:', this.companyForm.invalid)
     if (this.companyForm.invalid) {
       return;
     } else {
