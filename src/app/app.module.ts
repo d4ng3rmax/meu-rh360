@@ -11,6 +11,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
 import { CpfMaskDirective } from './utils/document-mask.directive';
 import { CelMaskDirective } from './utils/cel-mask.directive';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CelMaskDirective } from './utils/cel-mask.directive';
     MainPageComponent,
     SideMenuComponent,
     CpfMaskDirective,
-    CelMaskDirective
+    CelMaskDirective,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,

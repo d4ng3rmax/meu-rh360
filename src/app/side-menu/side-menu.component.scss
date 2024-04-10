@@ -15,5 +15,10 @@ li {
       text-decoration: underline;
       font-weight: 600;
     }
+
+    &.active-link {
+      color: #3867a9;
+      font-weight: 600;
+    }
   }
 }

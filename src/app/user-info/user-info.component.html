@@ -1,0 +1,10 @@
+<div id="user-info">
+  <div *ngIf="companyData" class="container mt-5">
+    <h3>Dados da Empresa</h3>
+    <ul>
+      <li *ngFor="let key of objectKeys(companyData)">
+        <strong>{{ titleMap[key] || key | titlecase }}:</strong> <span>{{ companyData[key] }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
