@@ -50,24 +50,25 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
+    const companyData = JSON.parse(sessionStorage.getItem('companyData') || '{}');
     const shortName = userData.fullname || '';
     this.isValidated = this.LoggedService.isValidated();
     this.userName = this.getFirstName(shortName);
 
     this.companyForm = this.formBuilder.group({
-      companyType: [''],
-      companyName: ['', [Validators.required, Validators.minLength(3)]],
-      companyCNPJ: ['', [Validators.required, CnpjValidator.isValidCnpj()]],
-      companyCEP: [''],
-      companyAddress: [''],
-      companyNeighborhood: [''],
-      companyState: [''],
-      companyCity: [''],
-      companyComplement: [''],
-      companyEmail: ['', [Validators.required, Validators.email]],
-      adminCel: ['', [Validators.required, Validators.minLength(8)]],
-      adminName: ['', [Validators.required, Validators.minLength(5)]],
-      adminCPF: ['', [Validators.required, CpfValidator.isValidCpf()]]
+      companyType: [companyData['companyType'] || ''],
+      companyName: [companyData['companyName'] || '', [Validators.required, Validators.minLength(3)]],
+      companyCNPJ: [companyData['companyCNPJ'] || '', [Validators.required, CnpjValidator.isValidCnpj()]],
+      companyCEP: [companyData['companyCEP'] || ''],
+      companyAddress: [companyData['companyAddress'] || ''],
+      companyNeighborhood: [companyData['companyNeighborhood'] || ''],
+      companyState: [companyData['companyState'] || ''],
+      companyCity: [companyData['companyCity'] || ''],
+      companyComplement: [companyData['companyComplement'] || ''],
+      companyEmail: [companyData['companyEmail'] || '', [Validators.required, Validators.email]],
+      adminCel: [companyData['adminCel'] || '', [Validators.required, Validators.minLength(8)]],
+      adminName: [companyData['adminName'] || '', [Validators.required, Validators.minLength(5)]],
+      adminCPF: [companyData['adminCPF'] || '', [Validators.required, CpfValidator.isValidCpf()]]
     });
 
     this.companyForm.get('companyState')!.valueChanges.subscribe(estado => {

@@ -14,7 +14,7 @@
       <button type="button" class="close ml-auto" (click)="fecharModal($event)">
         <span aria-hidden="true">&times;</span>
       </button>
-      <h4 class="modal-title">Editar empresa</h4>
+      <h4 class="modal-title">{{ isValidated ? 'Editar empresa' : 'Cadastrar empresa' }}</h4>
 
       <!-- Início Form -->
 
