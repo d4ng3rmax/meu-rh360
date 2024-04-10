@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoggedService } from '../utils/logged.service';
-import { ViacepService } from '../utils/viacep.service';
+import { LoggedService } from '@utils/logged.service';
+import { ViacepService } from '@utils/viacep.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -8,9 +8,9 @@ import {
   FormControl,
   Validators,
 } from '@angular/forms';
-import { CpfValidator } from '../utils/cpf-validator';
-import { CnpjValidator } from '../utils/cnpj-validator';
-import { estadosCidades } from '../data/estados-cidades.data';
+import { CpfValidator } from '@utils/cpf-validator';
+import { CnpjValidator } from '@utils/cnpj-validator';
+import { estadosCidades } from '@app/data/estados-cidades.data';
 
 @Component({
   selector: 'app-user-profile',

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageComponent } from './main-page/main-page.component';
-import { RegisterComponent } from './register/register.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { UserInfoComponent } from './user-info/user-info.component';
+import { MainPageComponent } from './component/main-page/main-page.component';
+import { RegisterComponent } from './component/register/register.component';
+import { UserProfileComponent } from './component/user-profile/user-profile.component';
+import { UserInfoComponent } from './component/user-info/user-info.component';
 
 
 const routes: Routes = [

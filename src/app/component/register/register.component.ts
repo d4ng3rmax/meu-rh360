@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import passwdValidation from '../utils/passwdValidation';
+import passwdValidation from '../../utils/passwdValidation';
 
 @Component({
   selector: 'app-register',
