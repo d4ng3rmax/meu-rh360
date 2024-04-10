@@ -1,6 +1,6 @@
 <nav class="navigation">
   <ul>
-    <li><a routerLink="/user">Home</a></li>
+    <li><a href="#" (click)="navigateHome($event)" style="color: brown;">Home</a></li>
     <li *ngIf="isValidated"><a routerLink="/user/profile">Perfil do Usuário</a></li>
     <li *ngIf="isValidated"><a routerLink="/company-registration">Cadastro de Empresa Matriz</a></li>
   </ul>

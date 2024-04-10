@@ -1,8 +1,12 @@
 <div id="user-profile">
   <div class="container mt-5">
-    <h3>Olá, {{ userName }}. Seja bem-vindo!</h3>
-    <p class="lead">É necessário configurar a empresa matriz para visualizar as informações do sistema.</p>
-    <button class="btn btn-primary" (click)="abrirModalConfiguracao()">Iniciar configuração</button>
+    <h3>Olá, {{ userName || 'usuário anônimo' }}. Seja bem-vindo!</h3>
+    <p class="lead" *ngIf="!isValidated">É necessário configurar a empresa matriz para visualizar as informações do
+      sistema.</p>
+    <button class="btn btn-primary mt-5" (click)="abrirModalConfiguracao()">{{
+      isValidated
+      ? 'Editar informações da empresa'
+      : 'Iniciar configuração' }}</button>
   </div>
 
   <div class="modal" *ngIf="isModalOpen">
@@ -11,6 +15,8 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h4 class="modal-title">Editar empresa</h4>
+
+      <!-- Início Form -->
 
       <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
         <!-- Linha 1 -->
@@ -48,7 +54,8 @@
           <div class="col-md-1 mb-3">
             <div class="form-group">
               <label for="companyCEP">CEP</label>
-              <input type="text" class="form-control" formControlName="companyCEP" placeholder="CEP">
+              <input type="text" class="form-control" formControlName="companyCEP" placeholder="CEP"
+                (blur)="buscarCep()">
             </div>
           </div>
 
@@ -70,7 +77,7 @@
             <div class="form-group">
               <label for="companyState">Estado</label>
               <select class="form-control" formControlName="companyState">
-                <!-- Opções de estado vão aqui -->
+                <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
               </select>
             </div>
           </div>
@@ -79,7 +86,7 @@
             <div class="form-group">
               <label for="companyCity">Cidade</label>
               <select class="form-control" formControlName="companyCity">
-                <!-- Opções de cidade vão aqui -->
+                <option *ngFor="let cidade of cidades" [value]="cidade">{{ cidade }}</option>
               </select>
             </div>
           </div>

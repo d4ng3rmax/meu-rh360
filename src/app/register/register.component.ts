@@ -29,6 +29,10 @@ export class RegisterComponent {
   constructor(private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+
+    sessionStorage.removeItem('userData');
+    sessionStorage.removeItem('companyData');
+
     this.registerForm = this.formBuilder.group(
       {
         fullname: ['',
@@ -68,8 +72,6 @@ export class RegisterComponent {
       const formData = { ...this.registerForm.value };
       delete formData.password;
       delete formData.confirmPassword;
-      // formData.menuValidated = true;
-      // console.log(JSON.stringify(this.registerForm.value, null, 2));
       sessionStorage.setItem('userData', JSON.stringify(formData));
       this.router.navigate(['/user/profile']);
     }

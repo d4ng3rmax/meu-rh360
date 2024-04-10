@@ -3,11 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from './main-page/main-page.component';
 import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-// import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
-// import { WelcomeComponent } from './welcome/welcome.component';
+
 
 const routes: Routes = [
-  { path: '', redirectTo: '/register', pathMatch: 'full' }, // Redireciona para login se a rota estiver vazia
+  { path: '', redirectTo: '/register', pathMatch: 'full' },
   {
     path: 'user',
     component: MainPageComponent,
@@ -17,9 +16,7 @@ const routes: Routes = [
       { path: 'register', component: RegisterComponent },
     ]
   },
-  { path: 'register', component: RegisterComponent },
-  // { path: 'company-registration', component: CompanyRegistrationComponent },
-  // { path: 'welcome', component: WelcomeComponent },
+  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({

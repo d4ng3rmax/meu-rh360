@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { LoggedService } from '../utils/logged.service';
+import { ViacepService } from '../utils/viacep.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,6 +10,7 @@ import {
 } from '@angular/forms';
 import { CpfValidator } from '../utils/cpf-validator';
 import { CnpjValidator } from '../utils/cnpj-validator';
+import { estadosCidades } from '../data/estados-cidades.data';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,6 +21,9 @@ export class UserProfileComponent implements OnInit {
 
   userName: string = '';
   isModalOpen = false;
+  isValidated = false;
+  estados = Object.keys(estadosCidades);
+  cidades: string[] = [];
 
   companyForm: FormGroup = new FormGroup({
     companyType: new FormControl(''),
@@ -37,15 +42,17 @@ export class UserProfileComponent implements OnInit {
   });
   submitted = false;
 
-  constructor(private router: Router, private formBuilder: FormBuilder) { }
+  constructor(
+    private LoggedService: LoggedService,
+    private formBuilder: FormBuilder,
+    private viacepService: ViacepService
+  ) { }
 
   ngOnInit(): void {
     const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
     const shortName = userData.fullname || '';
+    this.isValidated = this.LoggedService.isValidated();
     this.userName = this.getFirstName(shortName);
-    // console.log(userData);
-
-    // popup:
 
     this.companyForm = this.formBuilder.group({
       companyType: [''],
@@ -62,6 +69,11 @@ export class UserProfileComponent implements OnInit {
       adminName: ['', [Validators.required, Validators.minLength(5)]],
       adminCPF: ['', [Validators.required, CpfValidator.isValidCpf()]]
     });
+
+    this.companyForm.get('companyState')!.valueChanges.subscribe(estado => {
+      this.cidades = estadosCidades[estado as keyof typeof estadosCidades] || [];
+      this.companyForm.get('companyCity')?.reset();
+    });
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -70,6 +82,32 @@ export class UserProfileComponent implements OnInit {
 
   getFirstName(fullName: string): string {
     return fullName.split(' ')[0];
+  }
+
+  buscarCep(): void {
+    const cep = this.companyForm.get('companyCEP')?.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (cep && cep.length === 8) { // Verifica se o CEP tem 8 dígitos
+      this.viacepService.buscarCep(cep).subscribe(dados => {
+        if (dados && !dados.erro) {
+          // console.log(dados)
+          this.companyForm.patchValue({
+            companyAddress: dados.logradouro,
+            companyNeighborhood: dados.bairro
+          });
+          const estado = dados.uf;
+          this.companyForm.get('companyState')!.setValue(estado);
+          this.cidades = estadosCidades[estado as keyof typeof estadosCidades];
+          // console.log('this.cidades', this.cidades);
+
+          const cidade = dados.localidade;
+          this.companyForm.get('companyCity')!.setValue(cidade);
+        } else {
+          console.error('CEP não encontrado ou erro na resposta');
+        }
+      }, error => {
+        console.error('Erro na consulta do CEP', error);
+      });
+    }
   }
 
   abrirModalConfiguracao() {
@@ -83,14 +121,15 @@ export class UserProfileComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
 
-    console.log('status form:', this.companyForm.invalid)
     if (this.companyForm.invalid) {
       return;
     } else {
-      //
+      const formData = { ...this.companyForm.value };
+      formData.menuValidated = true;
+      sessionStorage.setItem('companyData', JSON.stringify(formData));
+      this.isModalOpen = false;
+      window.location.reload();
     }
-
-    console.log(this.companyForm.value);
   }
 
   onReset(): void {

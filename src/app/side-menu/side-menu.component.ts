@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoggedService } from '../utils/logged.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu',
@@ -9,9 +11,19 @@ export class SideMenuComponent implements OnInit {
 
   isValidated = false;
 
+  constructor(private router: Router, private LoggedService: LoggedService) { }
+
   ngOnInit(): void {
-    const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
-    this.isValidated = !!userData.menuValidated;
+    this.isValidated = this.LoggedService.isValidated();
+  }
+
+  navigateHome(event: MouseEvent): void {
+    event.preventDefault();
+
+    const confirmation = confirm('Tem certeza que deseja voltar e iniciar o processo? Os dados serão perdidos.');
+    if (confirmation) {
+      this.router.navigate(['/register']);
+    }
   }
 
 }
