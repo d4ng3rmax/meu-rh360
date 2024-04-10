@@ -4,6 +4,7 @@ import { MainPageComponent } from './component/main-page/main-page.component';
 import { RegisterComponent } from './component/register/register.component';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { UserInfoComponent } from './component/user-info/user-info.component';
+import { authGuard } from './Guard/auth.guard';
 
 
 const routes: Routes = [
@@ -13,9 +14,9 @@ const routes: Routes = [
     component: MainPageComponent,
     children: [
       { path: '', redirectTo: '/register', pathMatch: 'full' },
-      { path: 'profile', component: UserProfileComponent },
-      { path: 'register', component: RegisterComponent },
-      { path: 'info', component: UserInfoComponent },
+      { path: 'profile', component: UserProfileComponent, canActivate: [authGuard] },
+      { path: 'register', component: RegisterComponent, canActivate: [authGuard] },
+      { path: 'info', component: UserInfoComponent, canActivate: [authGuard] },
     ]
   },
   { path: 'register', component: RegisterComponent }

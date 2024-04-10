@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoggedService } from '@utils/logged.service';
+import { LoggedCompanyService } from '@app/utils/logged-company.service';
 import { ViacepService } from '@utils/viacep.service';
 import {
   AbstractControl,
@@ -43,7 +43,7 @@ export class UserProfileComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private LoggedService: LoggedService,
+    private LoggedCompanyService: LoggedCompanyService,
     private formBuilder: FormBuilder,
     private viacepService: ViacepService
   ) { }
@@ -52,7 +52,7 @@ export class UserProfileComponent implements OnInit {
     const userData = JSON.parse(sessionStorage.getItem('userData') || '{}');
     const companyData = JSON.parse(sessionStorage.getItem('companyData') || '{}');
     const shortName = userData.fullname || '';
-    this.isValidated = this.LoggedService.isValidated();
+    this.isValidated = this.LoggedCompanyService.isValidated();
     this.userName = this.getFirstName(shortName);
 
     this.companyForm = this.formBuilder.group({

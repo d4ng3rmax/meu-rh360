@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoggedService } from '../../utils/logged.service';
+import { LoggedCompanyService } from '../../utils/logged-company.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,10 +11,10 @@ export class SideMenuComponent implements OnInit {
 
   isValidated = false;
 
-  constructor(private router: Router, private LoggedService: LoggedService) { }
+  constructor(private router: Router, private LoggedCompanyService: LoggedCompanyService) { }
 
   ngOnInit(): void {
-    this.isValidated = this.LoggedService.isValidated();
+    this.isValidated = this.LoggedCompanyService.isValidated();
   }
 
   navigateHome(event: MouseEvent): void {
